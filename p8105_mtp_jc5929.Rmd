@@ -1,0 +1,22 @@
+---
+title: "p8105_mtp_jc5929"
+output: html_document
+date: "2022-10-22"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+library(tidyverse)
+library(dplyr)
+library(knitr)
+library(readxl)
+
+```{r}
+dog_data= read_excel("data/dogweights_07may2022.xlsx",skip = 1) %>%
+  janitor::clean_names() %>%
+  rename(x6=notes)
+  
+
+```
