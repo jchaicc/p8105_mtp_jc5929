@@ -13,10 +13,43 @@ library(dplyr)
 library(knitr)
 library(readxl)
 
+**Cleaning data set**
 ```{r}
-dog_data= read_excel("data/dogweights_07may2022.xlsx",skip = 1) %>%
+dog_data= read_excel("data/dogweights_07may2022.xlsx",skip = 1,col_types = 
+                   c("date", "guess", "guess", "guess", "guess", "text")) %>% 
   janitor::clean_names() %>%
-  rename(x6=notes)
+  drop_na(date) %>% 
+  select(-x6) %>% 
+  separate(date,into=c("year","month","day"),sep="-") %>% 
+  separate(raisin,into=c("lbs","oz"),sep=2)%>%
+  mutate(lbs=as.numeric(lbs), oz=as.numeric(oz)) %>%
+  mutate(raisin=round((lbs+oz/16),2))%>%
+  select(-lbs,-oz) %>%
+  separate(simone, into=c("lbs","oz"),sep=2) %>%
+  mutate(lbs=as.numeric(lbs), oz=as.numeric(oz)) %>%
+  mutate(simone=round((lbs+oz/16),2))%>%
+  select(-lbs,-oz) %>%
+  separate(gagne, into=c("lbs","oz"),sep=2) %>%
+  mutate(lbs=as.numeric(lbs), oz=as.numeric(oz)) %>%
+  mutate(gagne=round((lbs+oz/16),2)) %>%
+  select(-lbs,-oz) %>% 
+  separate(std, into=c("lbs","oz"),sep=2) %>%
+  mutate(lbs=as.numeric(lbs), oz=as.numeric(oz)) %>%
+  mutate(std=round((lbs+oz/16),2)) %>%
+  select(-lbs,-oz) %>% 
+  pivot_longer(
+    raisin:gagne,
+    names_to = "dog_name",
+    values_to = "weight"
+  )                  %>%
+  drop_na(weight)
+  
+
+  
+  
+  
+  
+  
   
 
 ```
