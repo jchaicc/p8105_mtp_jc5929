@@ -95,16 +95,21 @@ plot1=dog_data %>%
     aes(point_color = dog_name, point_shape = dog_name,point_fill=dog_name),
     alpha = .3, point_alpha = 0.7, jittered_points = TRUE
   ) +labs(title = "The distribution of weights for each dog",
-    x = "weight_lbs",
+    x = "weight",
     y = "count")
 
 dog_df1= dog_data%>%
   mutate(date=as.Date(with(dog_data,paste(year,month,day,sep="-"),"%Y-%m-%d")))%>%
-  select(-year,-month,-day)
-
-plot2=
+  select(-year,-month,-day) 
+ 
+plot2= dog_df1 %>%
+  group_by(dog_name,weight) %>%
+  ggplot(aes(x=date,y=weight,color=dog_name))+geom_point(alpha=0.4)+ 
+  geom_smooth(alpha=0.4, se=FALSE) +labs(title = "Weight distrubution over time",
+       x = "date",
+       y = "weight")+scale_x_date(date_labels = "%b-%d-%Y")
                                         
   
-
+plot1+plot2
 
 ```
