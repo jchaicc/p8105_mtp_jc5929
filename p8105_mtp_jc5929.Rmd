@@ -19,6 +19,7 @@ dog_data= read_excel("data/dogweights_07may2022.xlsx",skip = 1,col_types =
                    c("date", "guess", "guess", "guess", "guess", "text")) %>% 
   janitor::clean_names() %>%
   drop_na(date) %>% 
+  subset(raisin != "NA" | simone != "NA" | gagne != "NA") %>%
   select(-x6) %>% 
   separate(date,into=c("year","month","day"),sep="-") %>% 
   separate(raisin,into=c("lbs","oz"),sep=2)%>%
@@ -42,14 +43,24 @@ dog_data= read_excel("data/dogweights_07may2022.xlsx",skip = 1,col_types =
     names_to = "dog_name",
     values_to = "weight"
   )                  %>%
-  drop_na(weight)
-  
+  drop_na(weight) %>%
+  relocate(std,.after=weight)
 
-  
-  
-  
-  
-  
-  
+```
 
+```{r}
+notes_df= read_excel("data/dogweights_07may2022.xlsx", skip = 1, col_types = 
+                    c("date", "guess", "guess", "guess", "guess", "text")) %>% 
+  janitor::clean_names() %>% 
+  mutate(notes = x6) %>%
+  drop_na(notes) %>%
+  select(date,notes) %>%
+  select(date, notes) %>% 
+  separate(date, into=c("year", "month", "day"),sep="-")
+  
+```
+
+```{r}
+write_csv(weight_df, "./data/weight.csv")
+write_csv(notes_df, "./data/notes.csv")
 ```
