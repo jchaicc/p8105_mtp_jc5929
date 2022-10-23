@@ -91,7 +91,6 @@ knitr::kable()
 ```{r}
 plot1=dog_data %>%
   group_by(dog_name,weight) %>%
-  summarize(count=n()) %>%
   ggplot(aes(x=weight,y=dog_name,fill=dog_name))+
   geom_density_ridges(
     aes(point_color = dog_name, point_shape = dog_name,point_fill=dog_name),
@@ -99,6 +98,7 @@ plot1=dog_data %>%
   ) +labs(title = "The distribution of weights for each dog",
     x = "weight",
     y = "count")
+
 
 dog_df1= dog_data%>%
   mutate(date=as.Date(with(dog_data,paste(year,month,day,sep="-"),"%Y-%m-%d")))%>%
@@ -113,5 +113,8 @@ plot2= dog_df1 %>%
                                         
   
 plot1+plot2
+
+dog_data
+
 
 ```
