@@ -87,7 +87,7 @@ knitr::kable()
 **Visualization**
 
 ```{r}
-dog_data %>%
+plot1=dog_data %>%
   group_by(dog_name,weight) %>%
   summarize(count=n()) %>%
   ggplot(aes(x=weight,y=dog_name,fill=dog_name))+
@@ -97,6 +97,12 @@ dog_data %>%
   ) +labs(title = "The distribution of weights for each dog",
     x = "weight_lbs",
     y = "count")
+
+dog_df1= dog_data%>%
+  mutate(date=as.Date(with(dog_data,paste(year,month,day,sep="-"),"%Y-%m-%d")))%>%
+  select(-year,-month,-day)
+
+plot2=
                                         
   
 
