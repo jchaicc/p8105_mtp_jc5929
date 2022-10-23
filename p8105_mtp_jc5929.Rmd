@@ -12,6 +12,8 @@ library(tidyverse)
 library(dplyr)
 library(knitr)
 library(readxl)
+library(ggridges)
+library(patchwork)
 
 **Cleaning data set**
 ```{r}
@@ -48,6 +50,7 @@ dog_data= read_excel("data/dogweights_07may2022.xlsx",skip = 1,col_types =
 
 ```
 
+**Creating a dataframe with notes**
 ```{r}
 notes_df= read_excel("data/dogweights_07may2022.xlsx", skip = 1, col_types = 
                     c("date", "guess", "guess", "guess", "guess", "text")) %>% 
@@ -60,7 +63,42 @@ notes_df= read_excel("data/dogweights_07may2022.xlsx", skip = 1, col_types =
   
 ```
 
+**Export data sets**
 ```{r}
-write_csv(weight_df, "./data/weight.csv")
-write_csv(notes_df, "./data/notes.csv")
+write_csv(dog_data, "data/dog.csv")
+write_csv(notes_df, "data/notes.csv")
+```
+
+*Summary of the data set**
+```{r}
+ dog_data%>%
+   distinct(year,month,day)
+```
+
+```{r}
+dog_data%>%
+  group_by(dog_name) %>%
+  summarize(obs=n(),
+            avg_weight=mean(weight),
+            sd_weight=sd(weight)) %>%
+knitr::kable()
+```
+
+**Visualization**
+
+```{r}
+dog_data %>%
+  group_by(dog_name,weight) %>%
+  summarize(count=n()) %>%
+  ggplot(aes(x=weight,y=dog_name,fill=dog_name))+
+  geom_density_ridges(
+    aes(point_color = dog_name, point_shape = dog_name,point_fill=dog_name),
+    alpha = .3, point_alpha = 0.7, jittered_points = TRUE
+  ) +labs(title = "The distribution of weights for each dog",
+    x = "weight_lbs",
+    y = "count")
+                                        
+  
+
+
 ```
