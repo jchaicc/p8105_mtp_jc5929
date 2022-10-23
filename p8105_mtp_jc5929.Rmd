@@ -21,9 +21,9 @@ library(patchwork)
 ```{r}
 dog_data= read_excel("data/dogweights_07may2022.xlsx",skip = 1,col_types = 
                    c("date", "guess", "guess", "guess", "guess", "text")) %>% 
-  janitor::clean_names() %>%
+  janitor::clean_names() %>% 
   drop_na(date) %>% 
-  subset(raisin != "NA" | simone != "NA" | gagne != "NA") %>%
+  subset(raisin != "NA" | simone != "NA" | gagne != "NA") %>% 
   select(-x6) %>% 
   separate(date,into=c("year","month","day"),sep="-") %>% 
   separate(raisin,into=c("lbs","oz"),sep=2)%>%
