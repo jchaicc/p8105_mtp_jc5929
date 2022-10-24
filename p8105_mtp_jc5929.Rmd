@@ -129,6 +129,8 @@ plot2= dog_df1 %>%
   
 plot1+plot2
 
+ggsave(file="results/plot1+plot2.pdf",plot=plot1+plot2,width=8,height=5)
+
 ```
 Plot on the left shows the density of weight for each dog, we can find that Raisin has much higher weight than Gagne and Simon. From the plot,we can also see that there exits an outlier for Raisin that has a weight of less than 10 pounds. 
 
