@@ -16,7 +16,7 @@ library(readxl)
 library(ggridges)
 library(patchwork)
 ```
-
+This project aims to 
 **Cleaning data set**
 ```{r}
 dog_data= read_excel("data/dogweights_07may2022.xlsx",skip = 1,col_types = 
