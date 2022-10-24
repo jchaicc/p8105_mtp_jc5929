@@ -56,15 +56,15 @@ dog_data= read_excel("data/dogweights_07may2022.xlsx",skip = 1,col_types =
 ```
 The raw data was in excel format and the “Date” variable has multiple forms of expressions. After importing, I unified them into 
 a single format. Then I dropped the row that has no date information, I also dropped the rows that has NA in all three dogs'
-weight, as this kind of data will be useless for our further analysis. 
+weight, as these data will be useless for our further analysis. 
 
-Next, I tried to format the weight into a pounds. I have separated the columns raisin, simone, and gagne by whitespace, 
+Next, I tried to format the weight into pounds. I have separated the columns raisin, simone, and gagne by whitespace, 
 respectively, into two columns lbs and oz. Then I divided the oz by 16, and add it with the lbs column. This whole step was done three times for the three dogs. 
 
 Realizing that the original data was in a wide format where all three dogs’ names are the column names, which is not tidy. I make it into a long format by replacing the three dogs's names into two columns, dog_name and weight. I also deleted the rows that has NA in the weight column. Finally, I rearrange the column sequence in order for a better view.
 
 Below step is to create another data frame containing notes and the date, and save the two data frames into csv files.
-**Creating data frame with notes**
+**Creating data frame**
 ```{r}
 notes_df= read_excel("data/dogweights_07may2022.xlsx", skip = 1, col_types = 
                     c("date", "guess", "guess", "guess", "guess", "text")) %>% 
@@ -82,13 +82,13 @@ write_csv(dog_data, "data/dog.csv")
 write_csv(notes_df, "data/notes.csv")
 ```
 
-*Summary of the data set**
+**Summary of data set**
 ```{r}
  dog_data%>%
    distinct(year,month,day)
 ```
 In the tidy data set dog_data, it contains `r nrow(dog_data)` rows, and `r ncol(dog_data)` columns. The rows represents the weight 
-information for a single dog on a specific date. The columns includes variables of the date, dog name, weight, and the weight of a standard object. There are 356 unique dates included. Below is a table showing the number of observations for each dog, along with their average weight and standard deviation.
+information for a single dog on a specific date. The columns includes variables of the year, month, day, dog name, weight, and the weight of a standard object. There are 356 unique dates included. Below is a table showing the number of observations for each dog, along with their average weight and standard deviation.
 ```{r}
 dog_data%>%
   group_by(dog_name) %>%
@@ -132,7 +132,7 @@ plot1+plot2
 ggsave(file="results/plot1+plot2.pdf",plot=plot1+plot2,width=8,height=5)
 
 ```
-Plot on the left shows the density of weight for each dog, we can find that Raisin has much higher weight than Gagne and Simon. From the plot,we can also see that there exits an outlier for Raisin that has a weight of less than 10 pounds. 
+Plot on the left shows that Raisin has much higher weight than Gagne and Simon. We can also observe that there exits an outlier for Raisin that has a weight of less than 10 pounds. 
 
 Observing the weight for each dog over time, we can see that the trend for Simone gradually decreased from 2018 to 2020, and then started
-to decrease rapidly until 2022. Raisin has a decreasing trend overall as well, but Raisin has slightly increased in its weight between July 2019 and July 2020, and between July 2021 and May 2022. However, Raisin's weight is still lower in 2022 than in 2018. Raisin also appears to have a big fluctuation over the time. For Gagne, its weight kept going down rapidly, especially after April 2019, and shows to have the lowest weight among the three dogs. After September 2019, there is no records for Gagne anymore. 
+to decrease rapidly until 2022. Raisin has a decreasing trend overall as well, but Raisin has slightly increased in its weight between July 2019 and July 2020, and between July 2021 and May 2022. However, Raisin's weight is still lower in 2022 than in 2018. Raisin also appears to have a big fluctuation over the time. For Gagne, its weight kept going down rapidly, especially after April 2019, and shows to have the lowest weight among the three dogs. After September 2019, there is no records for Gagne anymore, since Gagne died on Sept 8th 2019 according to the notes.
