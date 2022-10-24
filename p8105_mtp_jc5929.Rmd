@@ -1,5 +1,5 @@
 ---
-title: "p8105_mtp_jc5929"
+title: "Midterm Project"
 output: github_document
 date: "2022-10-22"
 ---
@@ -16,7 +16,7 @@ library(readxl)
 library(ggridges)
 library(patchwork)
 ```
-**Goal of the project**
+**Project goal**
 
 This project aims to analyze the weight of the three dogs from 2018 to 2022.
 
@@ -54,7 +54,7 @@ dog_data= read_excel("data/dogweights_07may2022.xlsx",skip = 1,col_types =
   relocate(std,.after=weight)
 
 ```
-The raw data was in excel format and the “Date” variable has multiple forms of expressions. After importing, I unified them into 
+The raw data was in excel format and the “Date” variable has multiple forms of expressions.So I unified them into 
 a single format. Then I dropped the row that has no date information, I also dropped the rows that has NA in all three dogs'
 weight, as these data will be useless for our further analysis. 
 
@@ -63,7 +63,7 @@ respectively, into two columns lbs and oz. Then I divided the oz by 16, and add 
 
 Realizing that the original data was in a wide format where all three dogs’ names are the column names, which is not tidy. I make it into a long format by replacing the three dogs's names into two columns, dog_name and weight. I also deleted the rows that has NA in the weight column. Finally, I rearrange the column sequence in order for a better view.
 
-Below step is to create another data frame containing notes and the date, and save the two data frames into csv files.
+Below step is to create another data frame containing notes and date, and save both into csv files.
 **Creating data frame**
 ```{r}
 notes_df= read_excel("data/dogweights_07may2022.xlsx", skip = 1, col_types = 
@@ -82,7 +82,7 @@ write_csv(dog_data, "data/dog.csv")
 write_csv(notes_df, "data/notes.csv")
 ```
 
-**Summary of data set**
+**Data set Summary**
 ```{r}
  dog_data%>%
    distinct(year,month,day)
@@ -132,7 +132,7 @@ plot1+plot2
 ggsave(file="results/plot1+plot2.pdf",plot=plot1+plot2,width=8,height=5)
 
 ```
-Plot on the left shows that Raisin has much higher weight than Gagne and Simon. We can also observe that there exits an outlier for Raisin that has a weight of less than 10 pounds. 
+Plot on the left shows that Raisin has much higher weight than Gagne and Simone. We can also observe that there exits an outlier for Raisin that has a weight of less than 10 pounds. 
 
 Observing the weight for each dog over time, we can see that the trend for Simone gradually decreased from 2018 to 2020, and then started
-to decrease rapidly until 2022. Raisin has a decreasing trend overall as well, but Raisin has slightly increased in its weight between July 2019 and July 2020, and between July 2021 and May 2022. However, Raisin's weight is still lower in 2022 than in 2018. Raisin also appears to have a big fluctuation over the time. For Gagne, its weight kept going down rapidly, especially after April 2019, and shows to have the lowest weight among the three dogs. After September 2019, there is no records for Gagne anymore, since Gagne died on Sept 8th 2019 according to the notes.
+to decrease rapidly until 2022, this might due to Simone started to had neurological problem in 2021. Raisin has a decreasing trend overall as well, but Raisin has slightly increased in its weight between July 2019 and July 2020, and between July 2021 and May 2022. However, Raisin's weight is still lower in 2022 than in 2018. Raisin also appears to have a big fluctuation over the time. For Gagne, its weight kept going down rapidly, especially after April 2019, and shows to have the lowest weight among the three dogs. After September 2019, there is no records for Gagne anymore, since Gagne died on Sept 8th 2019 according to the notes.
