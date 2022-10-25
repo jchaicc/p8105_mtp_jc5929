@@ -49,8 +49,8 @@ dog_data= read_excel("data/dogweights_07may2022.xlsx",skip = 1,col_types =
     raisin:gagne,
     names_to = "dog_name",
     values_to = "weight"
-  )                  %>%
-  drop_na(weight) %>%
+  ) %>% 
+  drop_na(weight) %>% 
   relocate(std,.after=weight)
 
 ```
