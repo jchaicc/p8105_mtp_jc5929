@@ -106,7 +106,6 @@ Simone has a relatively lower weight compared to Raisin and Gagne. Raisin has th
 
 ```{r,warning=FALSE}
 plot1=dog_data %>%
-  group_by(dog_name,weight) %>%
   ggplot(aes(x=weight,y=dog_name,fill=dog_name))+
   geom_density_ridges(
     aes(point_color = dog_name, point_shape = dog_name,point_fill=dog_name),
@@ -121,7 +120,6 @@ dog_df1= dog_data%>%
   select(-year,-month,-day) 
  
 plot2= dog_df1 %>%
-  group_by(dog_name,weight) %>%
   ggplot(aes(x=date,y=weight,color=dog_name))+geom_point(alpha=0.4)+ 
   geom_smooth(alpha=0.4, se=FALSE) +labs(title = "Weight distrubution over time",
        x = "date",
