@@ -21,7 +21,7 @@ library(patchwork)
 This project aims to analyze the weight of the three dogs from 2018 to 2022.
 
 **Cleaning data set**
-```{r}
+```{r,warning=FALSE}
 dog_data= read_excel("data/dogweights_07may2022.xlsx",skip = 1,col_types = 
                    c("date", "guess", "guess", "guess", "guess", "text")) %>% 
   janitor::clean_names() %>% 
@@ -64,8 +64,10 @@ respectively, into two columns lbs and oz. Then I divided the oz by 16, and add 
 Realizing that the original data was in a wide format where all three dogs’ names are the column names, which is not tidy. I make it into a long format by replacing the three dogs's names into two columns, dog_name and weight. I also deleted the rows that has NA in the weight column. Finally, I rearrange the column sequence in order for a better view.
 
 Below step is to create another data frame containing notes and date, and save both into csv files.
+
+
 **Creating data frame**
-```{r}
+```{r,warning=FALSE}
 notes_df= read_excel("data/dogweights_07may2022.xlsx", skip = 1, col_types = 
                     c("date", "guess", "guess", "guess", "guess", "text")) %>% 
   janitor::clean_names() %>% 
@@ -83,13 +85,13 @@ write_csv(notes_df, "data/notes.csv")
 ```
 
 **Data set Summary**
-```{r}
+```{r,warning=FALSE}
  dog_data%>%
    distinct(year,month,day)
 ```
 In the tidy data set dog_data, it contains `r nrow(dog_data)` rows, and `r ncol(dog_data)` columns. The rows represents the weight 
 information for a single dog on a specific date. The columns includes variables of the year, month, day, dog name, weight, and the weight of a standard object. There are 356 unique dates included. Below is a table showing the number of observations for each dog, along with their average weight and standard deviation.
-```{r}
+```{r,warning=FALSE}
 dog_data%>%
   group_by(dog_name) %>%
   summarize(obs=n(),
@@ -102,7 +104,7 @@ Simone has a relatively lower weight compared to Raisin and Gagne. Raisin has th
 
 **Visualization**
 
-```{r}
+```{r,warning=FALSE}
 plot1=dog_data %>%
   group_by(dog_name,weight) %>%
   ggplot(aes(x=weight,y=dog_name,fill=dog_name))+
